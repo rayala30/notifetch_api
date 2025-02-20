@@ -23,7 +23,7 @@ def get_notifications_by_type(notification_type):
     return jsonify({"notifications": [n.template for n in notifications]})
 
 
-@api.route('/notifications/id/<int:notification_id>', methods=['GET'])
+@api.route('/notifications/<int:notification_id>', methods=['GET'])
 def get_notification_by_id(notification_id):
     """Retrieves a single notification by its ID."""
     notification = Notification.query.get(notification_id)
@@ -42,7 +42,7 @@ def get_all_notifications():
     return jsonify({"notifications": [{"type": n.type, "template": n.template} for n in notifications]})
 
 
-@api.route('/notifications/id/<int:notification_id>/fields', methods=['GET'])
+@api.route('/notifications/<int:notification_id>/fields', methods=['GET'])
 def get_notification_placeholders(notification_id):
     """Retrieves all required fields (placeholders) for a notification template."""
     notification = Notification.query.get(notification_id)
@@ -56,7 +56,7 @@ def get_notification_placeholders(notification_id):
     return jsonify({"id": notification.id, "type": notification.type, "placeholders": placeholders})
 
 
-@api.route('/notifications/id/<int:notification_id>/customize', methods=['POST'])
+@api.route('/notifications/<int:notification_id>/customize', methods=['POST'])
 def customize_notification(notification_id):
     """Fills placeholders in a notification template with user-provided values."""
     notification = Notification.query.get(notification_id)
