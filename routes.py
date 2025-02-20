@@ -34,12 +34,11 @@ def get_notification_by_id(notification_id):
     return jsonify({"id": notification.id, "type": notification.type, "template": notification.template})
 
 
-
 @api.route('/notifications', methods=['GET'])
 def get_all_notifications():
     """Retrieves all notifications in the database."""
     notifications = Notification.query.all()
-    return jsonify({"notifications": [{"type": n.type, "template": n.template} for n in notifications]})
+    return jsonify({"notifications": [{"id": n.id, "type": n.type, "template": n.template} for n in notifications]})
 
 
 @api.route('/notifications/<int:notification_id>/fields', methods=['GET'])
