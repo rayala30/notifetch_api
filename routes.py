@@ -56,32 +56,3 @@ def get_notification_placeholders(notification_id):
     return jsonify({"id": notification.id, "template": notification.template, "type": notification.type, "placeholders": placeholders})
 
 
-@api.route('/notifications/<int:notification_id>/customize', methods=['PUT'])
-def customize_notification(notification_id):
-    """Fills placeholders in a notification template with user-provided values."""
-
-    # Log incoming request
-    logging.info(f"Incoming POST request for notification ID: {notification_id}")
-    logging.info(f"Request data: {request.get_json()}")
-
-    notification = Notification.query.get(notification_id)
-
-    if not notification:
-        logging.error(f"Notification ID {notification_id} not found!")
-        return jsonify({"error": "Notification not found"}), 404
-
-    # Get user input from request JSON
-    user_data = request.get_json()
-
-    if not user_data:
-        logging.error("Missing request body!")
-        return jsonify({"error": "Request body must be JSON"}), 400
-
-    try:
-        # Fill in the placeholders with user-provided values
-        customized_message = notification.template.format(**user_data)
-    except KeyError as e:
-        logging.error(f"Missing required field: {str(e)[1:-1]}")
-        return jsonify({"error": f"Missing required field: {str(e)[1:-1]}"}), 400
-
-    return jsonify({"id": notification.id, "type": notification.type, "customized_message": customized_message})
