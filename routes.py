@@ -38,4 +38,4 @@ def get_notifications_by_type(notification_type):
 def get_all_notifications():
     """Retrieves all notifications in the database."""
     notifications = Notification.query.all()
-    return jsonify({"notifications": [{"type": n.type, "message": n.message} for n in notifications]})
+    return jsonify({"notifications": [{"type": n.type, "template": n.template} for n in notifications]})
