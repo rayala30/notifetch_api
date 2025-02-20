@@ -6,7 +6,12 @@ from app import db
 api = Blueprint('api', __name__)
 
 
-@api.route('/get_notifications/<notification_type>', methods=['GET'])
+@api.route("/")
+def home():
+    return jsonify({"message": "Welcome to NotiFetch API!"})
+
+
+@api.route('/notifications/<notification_type>', methods=['GET'])
 def get_notifications_by_type(notification_type):
     """Retrieves all notifications of a specific type, allowing dynamic placeholders."""
     notifications = Notification.query.filter_by(type=notification_type).all()
@@ -29,7 +34,7 @@ def get_notifications_by_type(notification_type):
     return jsonify({"notifications": processed_notifications})
 
 
-@api.route('/get_all_notifications', methods=['GET'])
+@api.route('/notifications', methods=['GET'])
 def get_all_notifications():
     """Retrieves all notifications in the database."""
     notifications = Notification.query.all()
