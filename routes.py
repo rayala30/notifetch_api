@@ -56,7 +56,7 @@ def get_notification_placeholders(notification_id):
     return jsonify({"id": notification.id, "template": notification.template, "type": notification.type, "placeholders": placeholders})
 
 
-@api.route('/notifications/<int:notification_id>/customize', methods=['POST'])
+@api.route('/notifications/<int:notification_id>/customize', methods=['PUT'])
 def customize_notification(notification_id):
     """Fills placeholders in a notification template with user-provided values."""
 
